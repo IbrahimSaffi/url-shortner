@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>URL shortner</title>
+</head>
+<h1></h1>
+
+<body>
+    <div class="output alert">Copied</div>
+    <h1 class="title">short.it</h1>
+    <h2>
+        Here is your shortened url!
+    </h2>
+    <p>
+        <button class="output btn">
+             <%= newUrl %>
+        </button>
+    <p>Click to copy</p>
+    <!-- url http://localhost:8000/<%= orignalUrl %> has been shortened to http://localhost:8000/<%= newUrl %> -->
+    <!-- url <%= orignalUrl %> has been shortened to <%= newUrl %> -->
+    <!-- // add newUrl and url to database
+ //display newUrl and URL
+ //if users open with certain url check in database that url exists or not if it does to redirect to og url -->
+    </p>
+    <script>
+        let txt = document.querySelector(".btn")
+        txt.textContent=window.location.origin+"/"+txt.textContent
+        txt.addEventListener("click",()=>{
+            navigator.clipboard.writeText(txt.textContent)
+            setTimeout(() => {
+                document.querySelector(".alert").style.top = "-100px"
+            }, 2000)
+            document.querySelector(".alert").style.top = "20px"
+        })
+    </script>
+</body>
+
+</html>
