@@ -19,15 +19,12 @@ app.get("/:id", (req, res) => {
     let id = req.params.id
     console.log(id)
     dbPool.query(`SELECT url,visit FROM shortit WHERE shrturl = '${id}';`, (err, q) => {
-        console.log(q)
-        if (err) {
+        if (q.rows.length===0) {
             return res.status(400).send("No such page")
         }
         else {
             dbPool.query(`UPDATE shortit SET visit = ${Number(q.rows[0].visit) + 1} WHERE shrturl = '${id}';`, (err, q) => {
-                console.log(err, q)
             })
-            console.log("here", q)
             res.redirect(q.rows[0].url)
         }
     })
@@ -36,7 +33,6 @@ app.get("/:id", (req, res) => {
 app.post("/shortIt", (req, res) => {
     const orignalUrl = req.body.url
     dbPool.query(`SELECT shrturl FROM shortit WHERE url = '${orignalUrl}';`, (err, q) => {
-        console.log(q)
         if (q.rows.length===0) {
             console.log("here")
             const newUrl = nanoid(6)
@@ -44,7 +40,6 @@ app.post("/shortIt", (req, res) => {
             return res.render("shortenedUrl", { orignalUrl: orignalUrl, newUrl: newUrl })
         }
         else {
-            console.log(orignalUrl)
            return res.render("shortenedUrl", { orignalUrl: orignalUrl, newUrl: q.rows[0].shrturl })
         }
     })
