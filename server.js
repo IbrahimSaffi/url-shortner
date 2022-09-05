@@ -19,6 +19,11 @@ app.get("/:id", (req, res) => {
     let id = req.params.id
     console.log(id)
     dbPool.query(`SELECT url,visit FROM shortit WHERE shrturl = '${id}';`, (err, q) => {
+        if(err){
+            console.log(err)
+            console.log(q)
+            return
+        }
         if (q.rows.length===0) {
             return res.status(400).send("No such page")
         }
